@@ -156,9 +156,34 @@ footer{background:var(--b);color:rgba(255,255,255,.7);padding:20px;margin-top:20
 .ftr a{color:rgba(255,255,255,.6)}.ftr a:hover{color:var(--y)}
 .fbr{font-weight:700;color:#fff;font-size:12px}
 @media(max-width:600px){.hdr-r .eu,.upd{display:none}.home-g,.two-col,.cgrid{grid-template-columns:1fr}.topgrid{grid-template-columns:1fr 1fr}}
-</style>
+
+#login-overlay{position:fixed;inset:0;background:var(--b,#003E7E);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#login-overlay.hidden{display:none}
+.login-box{background:#fff;border-radius:12px;padding:40px 48px;box-shadow:0 8px 48px rgba(0,0,0,.35);text-align:center;max-width:400px;width:90%}
+.login-logo{width:56px;height:56px;background:#FFD100;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#003E7E;margin:0 auto 16px}
+.login-title{font-family:'DM Serif Display',serif;font-size:22px;color:#003E7E;margin-bottom:4px}
+.login-sub{font-size:13px;color:#6b7a93;margin-bottom:28px}
+.login-input{width:100%;padding:12px 16px;border:2px solid #d0dae8;border-radius:8px;font-size:15px;font-family:inherit;outline:none;transition:.2s;text-align:center;letter-spacing:2px}
+.login-input:focus{border-color:#003E7E}
+.login-input.error{border-color:#C0392B;animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.login-btn{width:100%;margin-top:16px;background:#FFD100;color:#003E7E;border:none;border-radius:8px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+.login-btn:hover{background:#e8bc00}
+.login-error{color:#C0392B;font-size:13px;margin-top:10px;height:18px}
+.login-footer{margin-top:20px;font-size:11px;color:#aaa}</style>
 </head>
 <body>
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">Kw</div>
+    <div class="login-title">NRPP Monitor</div>
+    <div class="login-sub">Kansen voor West &mdash; besloten omgeving</div>
+    <input class="login-input" type="password" id="pwInput" placeholder="Wachtwoord" onkeydown="if(event.key==='Enter')checkPW()">
+    <button class="login-btn" onclick="checkPW()">Inloggen</button>
+    <div class="login-error" id="pwError"></div>
+    <div class="login-footer">Toegang uitsluitend voor medewerkers Kansen voor West</div>
+  </div>
+</div>
 <header>
 <div class="hdr">
 <div style="display:flex;align-items:center;gap:12px">
@@ -407,5 +432,19 @@ function refreshAll(){
   nextAgent();
 }
 </script>
-</body>
+<script>
+function checkPW(){
+  var v=document.getElementById('pwInput').value;
+  var h=0;for(var i=0;i<v.length;i++){h=((h<<5)-h)+v.charCodeAt(i);h|=0;}
+  if(h===-1008016690){
+    document.getElementById('login-overlay').classList.add('hidden');
+    sessionStorage.setItem('nrpp_auth','1');
+  } else {
+    var inp=document.getElementById('pwInput');
+    inp.classList.add('error');
+    document.getElementById('pwError').textContent='Onjuist wachtwoord. Probeer opnieuw.';
+    setTimeout(function(){inp.classList.remove('error');},400);
+  }
+}
+(function(){if(sessionStorage.getItem('nrpp_auth')==='1'){document.getElementById('login-overlay').classList.add('hidden');}else{var inp=document.getElementById('pwInput');if(inp)setTimeout(function(){inp.focus();},100);}})();</script></body>
 </html>
