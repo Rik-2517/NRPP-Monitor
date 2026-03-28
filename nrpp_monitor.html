@@ -3,293 +3,370 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NRPP Monitor — Kansen voor West</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>NRPP Monitor v2 — Kansen voor West</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
-:root{--kvw-blauw:#003E7E;--kvw-lichtblauw:#0070C0;--kvw-geel:#FFD100;--kvw-oranje:#F07D00;--kvw-groen:#007A33;--kvw-grijs:#F4F6F9;--kvw-tekst:#212B3D;--eu-blauw:#003399;--radius:8px;--shadow:0 2px 16px rgba(0,62,126,.10)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--kvw-grijs);color:var(--kvw-tekst);font-size:15px;line-height:1.6}
-header{background:var(--kvw-blauw);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-.header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;height:68px}
-.logo-block{display:flex;align-items:center;gap:14px}
-.kvw-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:42px;height:42px;background:var(--kvw-geel);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;color:var(--kvw-blauw);font-weight:700}
-.logo-text strong{display:block;font-size:15px;font-weight:700;color:#fff}
-.logo-text span{font-size:11px;color:rgba(255,255,255,.65)}
-.header-divider{width:1px;height:32px;background:rgba(255,255,255,.2)}
-.monitor-title{font-family:'DM Serif Display',serif;font-size:18px;color:#fff}
-.monitor-title em{color:var(--kvw-geel);font-style:normal}
-.header-meta{display:flex;align-items:center;gap:12px;margin-left:auto}
-.eu-flag{display:flex;align-items:center;gap:5px;background:var(--eu-blauw);border-radius:4px;padding:4px 10px;font-size:11px;color:#fff;font-weight:500}
-.last-updated{font-size:11px;color:rgba(255,255,255,.55)}
-.refresh-btn{background:var(--kvw-geel);color:var(--kvw-blauw);border:none;border-radius:var(--radius);padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
-.refresh-btn.loading{opacity:.6;pointer-events:none}
-.nav-bar{background:var(--kvw-lichtblauw)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:4px}
-.nav-tab{padding:10px 18px;font-size:13px;font-weight:600;color:rgba(255,255,255,.75);cursor:pointer;border:none;background:transparent;font-family:inherit;position:relative;white-space:nowrap}
-.nav-tab:hover{color:#fff}
-.nav-tab.active{color:var(--kvw-geel)}
-.nav-tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--kvw-geel);border-radius:3px 3px 0 0}
-main{max-width:1200px;margin:0 auto;padding:28px 24px 48px}
-.status-banner{background:var(--kvw-blauw);color:#fff;border-radius:var(--radius);padding:14px 20px;display:flex;align-items:center;gap:14px;margin-bottom:24px;font-size:13px}
-.status-dot{width:10px;height:10px;border-radius:50%;background:#4ade80;flex-shrink:0}
-.status-dot.loading{background:var(--kvw-geel);animation:pulse 1.2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.progress-bar-wrap{flex:1;background:rgba(255,255,255,.15);border-radius:4px;height:6px;overflow:hidden;display:none}
-.progress-bar-wrap.visible{display:block}
-.progress-bar{height:100%;background:var(--kvw-geel);border-radius:4px;transition:width .4s;width:0%}
-.agent-tabs{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
-.agent-tab{flex:1;min-width:200px;background:#fff;border:2px solid transparent;border-radius:var(--radius);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.2s;box-shadow:var(--shadow);text-align:left;font-family:inherit}
-.agent-tab:hover{border-color:var(--kvw-lichtblauw)}
-.agent-tab.active{border-color:var(--kvw-blauw);background:#f0f5fb}
-.agent-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.agent-tab:nth-child(1) .agent-icon{background:#e8f0fc}
-.agent-tab:nth-child(2) .agent-icon{background:#fef3e2}
-.agent-tab:nth-child(3) .agent-icon{background:#e8f5ee}
-.agent-tab:nth-child(4) .agent-icon{background:#f3e8fc}
-.agent-label{font-size:13px;font-weight:600;color:var(--kvw-tekst)}
-.agent-sub{font-size:11px;color:#6b7a93;margin-top:1px}
+:root{--b:#003E7E;--lb:#0070C0;--y:#FFD100;--o:#F07D00;--g:#007A33;--p:#6B2FA0;--gr:#F4F6F9;--t:#212B3D;--eb:#003399;--r:8px;--sh:0 2px 16px rgba(0,62,126,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--gr);color:var(--t);font-size:14px;line-height:1.6}
+a{color:var(--lb);text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:var(--b);color:#fff;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.hdr{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-icon{width:38px;height:38px;background:var(--y);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--b);font-weight:700}
+.logo-text strong{display:block;font-size:14px;font-weight:700;color:#fff}
+.logo-text span{font-size:10px;color:rgba(255,255,255,.6)}
+.div{width:1px;height:28px;background:rgba(255,255,255,.2)}
+.mon{font-family:'DM Serif Display',serif;font-size:17px;color:#fff}
+.mon em{color:var(--y);font-style:normal}
+.hdr-r{display:flex;align-items:center;gap:10px;margin-left:auto}
+.eu{display:flex;align-items:center;gap:4px;background:var(--eb);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:3px 8px;font-size:10px;color:#fff}
+.eu span:first-child{color:#FFCC00;font-size:9px}
+.upd{font-size:10px;color:rgba(255,255,255,.5);white-space:nowrap}
+.api-inp{font-size:11px;padding:6px 10px;border:1px solid rgba(255,255,255,.3);border-radius:4px;background:rgba(255,255,255,.1);color:#fff;width:200px}
+.api-inp::placeholder{color:rgba(255,255,255,.5)}
+.rbtn{background:var(--y);color:var(--b);border:none;border-radius:var(--r);padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px}
+.rbtn:hover{background:#e8bc00}
+.rbtn.loading{opacity:.6;pointer-events:none}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-bar{background:var(--lb);position:sticky;top:62px;z-index:150}
+.nav-in{max-width:1400px;margin:0 auto;padding:0 20px;display:flex;gap:2px;overflow-x:auto}
+.ntab{padding:9px 15px;font-size:12px;font-weight:600;color:rgba(255,255,255,.75);cursor:pointer;border:none;background:transparent;font-family:inherit;white-space:nowrap;position:relative}
+.ntab:hover{color:#fff}
+.ntab.active{color:var(--y)}
+.ntab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--y);border-radius:3px 3px 0 0}
+main{max-width:1400px;margin:0 auto;padding:20px}
 .panel{display:none}
 .panel.active{display:block}
-.panel-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:16px}
-.panel-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--kvw-blauw);line-height:1.3}
-.panel-title small{display:block;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#6b7a93;margin-top:3px}
-.agent-badge{background:var(--kvw-blauw);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:20px}
-.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-.card-accent{height:4px}
-.juridisch .card-accent{background:var(--kvw-blauw)}
-.geopolitiek .card-accent{background:var(--kvw-oranje)}
-.bestuurskunde .card-accent{background:var(--kvw-groen)}
-.card-body{padding:18px;flex:1}
-.card-tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 8px;border-radius:4px;margin-bottom:10px}
-.tag-verordening{background:#e8f0fc;color:var(--kvw-blauw)}
-.tag-nederland{background:#fef3e2;color:#b35400}
-.tag-europa{background:#fff0e8;color:#8a3500}
-.tag-enveloppe{background:#e8f5ee;color:var(--kvw-groen)}
-.tag-nieuw{background:var(--kvw-geel);color:var(--kvw-blauw)}
-.card-date{font-size:11px;color:#8a94a6;margin-bottom:6px}
-.card-title{font-size:15px;font-weight:700;color:var(--kvw-tekst);margin-bottom:8px;line-height:1.4}
-.card-text{font-size:13px;color:#4a5568;line-height:1.6}
-.card-footer{padding:12px 18px;border-top:1px solid #f0f3f8;display:flex;align-items:center;justify-content:space-between}
-.card-source{font-size:11px;color:#8a94a6}
-.card-link{font-size:12px;font-weight:600;color:var(--kvw-lichtblauw);text-decoration:none}
-.enveloppe-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
-@media(max-width:760px){.enveloppe-wrapper{grid-template-columns:1fr}}
-.chart-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
-.chart-title{font-size:15px;font-weight:700;color:var(--kvw-blauw);margin-bottom:4px}
-.chart-sub{font-size:12px;color:#6b7a93;margin-bottom:20px}
-.donut-wrap{position:relative;width:200px;height:200px;margin:0 auto 20px}
-.donut-wrap svg{width:100%;height:100%}
-.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.donut-center strong{display:block;font-size:24px;color:var(--kvw-blauw);font-weight:700}
-.donut-center span{font-size:11px;color:#6b7a93}
-.legend{display:flex;flex-direction:column;gap:8px}
-.legend-item{display:flex;align-items:center;gap:10px;font-size:13px}
-.legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
-.legend-label{flex:1}
-.legend-val{font-weight:700;color:var(--kvw-blauw);font-size:13px}
-.legend-pct{font-size:11px;color:#8a94a6;width:38px;text-align:right}
-.bar-chart{display:flex;flex-direction:column;gap:10px}
-.bar-row{display:flex;flex-direction:column;gap:4px}
-.bar-label{font-size:12px;font-weight:600;display:flex;justify-content:space-between}
-.bar-label span{font-size:11px;color:#6b7a93;font-weight:400}
-.bar-bg{height:14px;background:var(--kvw-grijs);border-radius:7px;overflow:hidden}
-.bar-fill{height:100%;border-radius:7px}
-.timeline{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin-bottom:20px}
-.timeline-title{font-size:15px;font-weight:700;color:var(--kvw-blauw);margin-bottom:18px}
-.timeline-list{display:flex;flex-direction:column;position:relative;padding-left:24px}
-.timeline-list::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#d0dae8}
-.tl-item{position:relative;padding-bottom:18px}
-.tl-item:last-child{padding-bottom:0}
-.tl-dot{position:absolute;left:-24px;top:5px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--kvw-blauw);z-index:1}
-.tl-dot.done{background:var(--kvw-groen);border-color:var(--kvw-groen)}
-.tl-dot.current{background:var(--kvw-geel);border-color:var(--kvw-oranje)}
-.tl-dot.future{border-color:#c0cad8}
-.tl-date{font-size:11px;font-weight:700;color:#6b7a93;text-transform:uppercase}
-.tl-label{font-size:14px;font-weight:600;margin-top:2px}
-.tl-desc{font-size:12px;color:#6b7a93;margin-top:2px}
-.output-box{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.output-box-header{background:var(--kvw-blauw);color:#fff;padding:12px 18px;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.badge-live{background:var(--kvw-geel);color:var(--kvw-blauw);font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px}
-.output-content{padding:20px;font-size:14px;line-height:1.75;min-height:120px}
-.output-content p{margin-bottom:12px}
-.output-content p:last-child{margin-bottom:0}
-.output-content strong{color:var(--kvw-blauw)}
-footer{background:var(--kvw-blauw);color:rgba(255,255,255,.7);padding:24px;margin-top:20px}
-.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px}
-.footer-inner a{color:rgba(255,255,255,.6);text-decoration:none}
-.footer-kvw{font-weight:700;color:#fff;font-size:13px}
-@media(max-width:640px){.header-meta .eu-flag,.header-meta .last-updated{display:none}.card-grid{grid-template-columns:1fr}.agent-tabs{flex-direction:column}}
+.sbar{background:var(--b);color:#fff;border-radius:var(--r);padding:12px 18px;display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:12px}
+.sdot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0}
+.sdot.ld{background:var(--y);animation:pulse 1.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.pw{flex:1;background:rgba(255,255,255,.15);border-radius:4px;height:5px;overflow:hidden;display:none}
+.pw.vis{display:block}
+.pb{height:100%;background:var(--y);border-radius:4px;transition:width .4s;width:0%}
+/* HOME */
+.tlbar{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px 20px;margin-bottom:20px;overflow:hidden}
+.tlbar-t{font-size:13px;font-weight:700;color:var(--b);margin-bottom:12px}
+.tls{display:flex;align-items:flex-start;position:relative}
+.tls::before{content:'';position:absolute;top:14px;left:0;right:0;height:2px;background:#d0dae8;z-index:0}
+.tls-step{flex:1;text-align:center;position:relative;z-index:1;padding:0 2px}
+.tls-dot{width:26px;height:26px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:2px solid #d0dae8;background:#fff}
+.tls-step.done .tls-dot{background:var(--g);border-color:var(--g);color:#fff}
+.tls-step.now .tls-dot{background:var(--y);border-color:var(--o);color:var(--b)}
+.tls-step.fut .tls-dot{color:#8a94a6}
+.tls-lbl{font-size:9px;font-weight:600;color:var(--t);line-height:1.3}
+.tls-step.fut .tls-lbl{color:#8a94a6}
+.tls-date{font-size:8px;color:#8a94a6}
+.topbar{background:linear-gradient(135deg,var(--b),#0055aa);border-radius:var(--r);padding:14px 20px;margin-bottom:20px;color:#fff}
+.topbar-t{font-size:12px;font-weight:700;margin-bottom:10px}
+.topgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.topitem{background:rgba(255,255,255,.1);border-radius:6px;padding:10px 12px;border-left:3px solid var(--y)}
+.topitem.now{border-left-color:#4ade80;background:rgba(74,222,128,.1)}
+.topitem.past{opacity:.65}
+.top-d{font-size:10px;font-weight:700;color:var(--y)}
+.topitem.now .top-d{color:#4ade80}
+.top-l{font-size:12px;font-weight:600}
+.top-s{font-size:10px;color:rgba(255,255,255,.6);margin-top:2px}
+.home-g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:800px){.home-g{grid-template-columns:1fr}}
+.hblk{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.hblk-hdr{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f3f8}
+.hblk-t{font-family:'DM Serif Display',serif;font-size:16px;color:var(--b)}
+.hblk-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;white-space:nowrap}
+.hblk-body{padding:16px 18px}
+.stag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;margin-bottom:10px;background:#fef9e8;color:#b35400}
+.hblk p{font-size:13px;color:#4a5568;line-height:1.65;margin-bottom:8px}
+.hblk strong{color:var(--b)}
+/* MINI DONUT */
+.mini-c{display:flex;align-items:center;gap:16px;margin-top:12px}
+.mini-d{position:relative;width:100px;height:100px;flex-shrink:0}
+.mini-d svg{width:100%;height:100%}
+.mini-dc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.mini-dc strong{display:block;font-size:14px;color:var(--b);font-weight:700;line-height:1.1}
+.mini-dc span{font-size:9px;color:#6b7a93}
+.mleg{flex:1}
+.mli{display:flex;align-items:center;gap:7px;font-size:11px;margin-bottom:5px}
+.mld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.mlv{font-weight:700;color:var(--b);font-size:11px;margin-left:auto}
+/* PANELS */
+.phdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:12px}
+.ptitle{font-family:'DM Serif Display',serif;font-size:20px;color:var(--b);line-height:1.3}
+.ptitle small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:#6b7a93;margin-top:2px}
+.abadge{background:var(--b);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:16px;white-space:nowrap}
+.obox{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
+.ohdr{background:var(--b);color:#fff;padding:11px 16px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+.blive{background:var(--y);color:var(--b);font-size:9px;font-weight:800;padding:2px 6px;border-radius:12px}
+.obody{padding:18px;font-size:13px;line-height:1.7;color:var(--t);min-height:80px}
+.obody p{margin-bottom:10px}
+.obody strong{color:var(--b)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:760px){.two-col{grid-template-columns:1fr}}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:18px}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;display:flex;flex-direction:column}
+.ca{height:3px}
+.ver .ca{background:var(--b)}.nl .ca{background:var(--o)}.eu .ca{background:var(--eb)}.fnlc .ca{background:var(--p)}
+.cb{padding:14px;flex:1}
+.ct{display:inline-flex;align-items:center;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:2px 7px;border-radius:3px;margin-bottom:8px}
+.tv{background:#e8f0fc;color:var(--b)}.tn{background:#fef3e2;color:#b35400}.te{background:#eef0fb;color:var(--eb)}.tf{background:#f0e8fc;color:var(--p)}.tnew{background:var(--y);color:var(--b)}
+.cd{font-size:10px;color:#8a94a6;margin-bottom:4px}
+.ctit{font-size:13px;font-weight:700;color:var(--t);margin-bottom:6px;line-height:1.4}
+.ctxt{font-size:12px;color:#4a5568;line-height:1.6}
+.cft{padding:10px 14px;border-top:1px solid #f0f3f8;display:flex;align-items:center;justify-content:space-between}
+.csr{font-size:10px;color:#8a94a6}
+.clnk{font-size:11px;font-weight:600;color:var(--lb)}
+.lbox{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px 18px;margin-bottom:18px}
+.ltit{font-size:13px;font-weight:700;color:var(--b);margin-bottom:12px}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:8px}
+.litem{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border-radius:6px;border-left:3px solid var(--b)}
+.litem.esf{border-left-color:var(--lb)}.litem.efro{border-left-color:var(--g)}.litem.glb{border-left-color:var(--o)}.litem.int{border-left-color:var(--p)}
+.lic{font-size:18px;flex-shrink:0;margin-top:1px}
+.ltxt strong{display:block;font-size:12px;font-weight:700;color:var(--t);margin-bottom:2px}
+.ltxt span{font-size:11px;color:#6b7a93;display:block;margin-bottom:4px}
+.ltxt a{font-size:11px;font-weight:600;color:var(--lb)}
+.cwrap{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px}
+.ctitle{font-size:13px;font-weight:700;color:var(--b);margin-bottom:3px}
+.csub{font-size:11px;color:#6b7a93;margin-bottom:16px}
+.bch{display:flex;flex-direction:column;gap:9px}
+.br{display:flex;flex-direction:column;gap:3px}
+.bl{font-size:11px;font-weight:600;color:var(--t);display:flex;justify-content:space-between}
+.bl span{font-size:10px;color:#6b7a93;font-weight:400}
+.bbg{height:12px;background:var(--gr);border-radius:6px;overflow:hidden}
+.bfill{height:100%;border-radius:6px}
+.dwrap{position:relative;width:160px;height:160px;margin:0 auto 16px;flex-shrink:0}
+.dwrap svg{width:100%;height:100%}
+.dc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.dc strong{display:block;font-size:20px;color:var(--b);font-weight:700}
+.dc span{font-size:10px;color:#6b7a93}
+.leg{display:flex;flex-direction:column;gap:7px}
+.li{display:flex;align-items:center;gap:8px;font-size:12px}
+.ld{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+.ll{flex:1;color:var(--t)}
+.lv{font-weight:700;color:var(--b);font-size:12px}
+.lp{font-size:10px;color:#8a94a6;width:34px;text-align:right}
+.shdr{background:var(--gr);border-radius:var(--r);padding:10px 16px;margin-bottom:14px;border-left:4px solid var(--b);display:flex;align-items:center;gap:10px}
+.shdr.or{border-left-color:var(--o)}.shdr.pa{border-left-color:var(--p)}
+.shdr h3{font-size:13px;font-weight:700;color:var(--b);margin:0}
+.shdr.or h3{color:var(--o)}.shdr.pa h3{color:var(--p)}
+.shdr span{font-size:11px;color:#6b7a93}
+footer{background:var(--b);color:rgba(255,255,255,.7);padding:20px;margin-top:20px}
+.ftr{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11px}
+.ftr a{color:rgba(255,255,255,.6)}.ftr a:hover{color:var(--y)}
+.fbr{font-weight:700;color:#fff;font-size:12px}
+@media(max-width:600px){.hdr-r .eu,.upd{display:none}.home-g,.two-col,.cgrid{grid-template-columns:1fr}.topgrid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <header>
-  <div class="header-inner">
-    <div class="logo-block">
-      <a class="kvw-logo" href="https://kvw3.kansenvoorwest.nl" target="_blank" rel="noopener">
-        <div class="logo-icon">Kw</div>
-        <div class="logo-text"><strong>Kansen voor West</strong><span>Ontdek wat Europees geld aan kansen biedt</span></div>
-      </a>
-      <div class="header-divider"></div>
-      <div class="monitor-title">NRPP <em>Monitor</em></div>
-    </div>
-    <div class="header-meta">
-      <div class="eu-flag">&#9733;&#9733;&#9733;&#9733;&#9733; Medegefinancierd door de EU</div>
-      <span class="last-updated" id="lastUpdated">Bijgewerkt: laden...</span>
-      <button class="refresh-btn" id="refreshBtn" onclick="refreshAll()"><span id="refreshIcon">&#8635;</span> Wekelijkse update</button>
-    </div>
-  </div>
+<div class="hdr">
+<div style="display:flex;align-items:center;gap:12px">
+<a class="logo" href="https://kvw3.kansenvoorwest.nl" target="_blank" rel="noopener"><div class="logo-icon">Kw</div><div class="logo-text"><strong>Kansen voor West</strong><span>Ontdek wat Europees geld aan kansen biedt</span></div></a>
+<div class="div"></div><div class="mon">NRPP <em>Monitor</em></div>
+</div>
+<div class="hdr-r">
+<div class="eu"><span>★★★★★</span><span>Medegefinancierd door de EU</span></div>
+<span class="upd" id="lastUpd">laden…</span>
+<input class="api-inp" type="password" id="apiKey" placeholder="sk-ant-... (Anthropic API-sleutel)" title="Voer uw Anthropic API-sleutel in om de AI-agents te activeren">
+<button class="rbtn" id="rfBtn" onclick="refreshAll()"><span id="rfIco">⟳</span> Wekelijkse update</button>
+</div>
+</div>
 </header>
 <div class="nav-bar">
-  <div class="nav-inner">
-    <button class="nav-tab active" onclick="switchPanel('regelgeving',this)">Regelgeving</button>
-    <button class="nav-tab" onclick="switchPanel('nederland',this)">Nederland</button>
-    <button class="nav-tab" onclick="switchPanel('europa',this)">Europa</button>
-    <button class="nav-tab" onclick="switchPanel('enveloppe',this)">Enveloppe</button>
-    <button class="nav-tab" onclick="switchPanel('tijdlijn',this)">Tijdlijn</button>
-  </div>
+<div class="nav-in">
+<button class="ntab active" onclick="sw('home',this)">🏠 Overzicht</button>
+<button class="ntab" onclick="sw('regel',this)">⚖️ Verordeningen &amp; Regelgeving</button>
+<button class="ntab" onclick="sw('nl',this)">🇳🇱 Ontwikkelingen in Nederland</button>
+<button class="ntab" onclick="sw('eu',this)">🇪🇺 Ontwikkelingen in Europa</button>
+<button class="ntab" onclick="sw('env',this)">💰 Verdeling van de Middelen</button>
+<button class="ntab" onclick="sw('fnlc',this)">📈 Prestatiegerichte Afrekening</button>
+</div>
 </div>
 <main>
-  <div class="status-banner">
-    <div class="status-dot" id="statusDot"></div>
-    <div id="statusText"><strong>Monitor gereed.</strong> <span style="color:rgba(255,255,255,.7)">Klik op Wekelijkse update om alle agents te activeren en NRPP-ontwikkelingen op te halen.</span></div>
-    <div class="progress-bar-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
-  </div>
-  <div class="agent-tabs">
-    <button class="agent-tab active" onclick="switchAgent('regelgeving',this)"><div class="agent-icon">&#9878;</div><div><div class="agent-label">Juridische agent</div><div class="agent-sub">Verordeningen &amp; regelgeving</div></div></button>
-    <button class="agent-tab" onclick="switchAgent('nederland',this)"><div class="agent-icon">&#127963;</div><div><div class="agent-label">Geopolitieke agent</div><div class="agent-sub">Ontwikkelingen Nederland</div></div></button>
-    <button class="agent-tab" onclick="switchAgent('europa',this)"><div class="agent-icon">&#127758;</div><div><div class="agent-label">Geopolitieke agent</div><div class="agent-sub">Ontwikkelingen EU-breed</div></div></button>
-    <button class="agent-tab" onclick="switchAgent('enveloppe',this)"><div class="agent-icon">&#128202;</div><div><div class="agent-label">Bestuurskundige agent</div><div class="agent-sub">Verdeling enveloppe</div></div></button>
-  </div>
-  <div class="panel active" id="panel-regelgeving">
-    <div class="panel-header"><div class="panel-title">Regelgeving &amp; Verordeningen<small>Juridische analyse van het NRPP-kader - MFK 2028-2034</small></div><span class="agent-badge">Juridische Agent</span></div>
-    <div class="output-box" style="margin-bottom:20px"><div class="output-box-header"><span>Juridische Agent - Analyseresultaat</span><span class="badge-live" id="juridischBadge">NIET GELADEN</span></div><div class="output-content" id="juridischOutput"><p>Klik op <strong>Wekelijkse update</strong> (rechtsboven) om de juridische agent te starten. De agent analyseert verordeningen, BNC-fiches en Commissievoorstellen rondom het NRPP.</p><p>Gedekt: NRPP-verordening (COM 2025/565), ESF-verordening, EFRO-verordening, partnerschapsverordening en relevante Kamerstukken.</p></div></div>
-    <div class="card-grid juridisch">
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-verordening">Verordening</span><div class="card-date">16 juli 2025</div><div class="card-title">COM(2025)565 - Oprichting Europees NRPP-Fonds</div><div class="card-text">Commissievoorstel voor geintegreerd fonds dat 14 fondsen (EFRO, ESF+, CF, GLB, EFMZV en meer) bundelt onder een overkoepelend NRPP-kader voor 2028-2034. Totaalbudget: 865 miljard euro.</div></div><div class="card-footer"><span class="card-source">Europese Commissie</span><a class="card-link" href="https://eur-lex.europa.eu" target="_blank">Bekijk</a></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-verordening tag-nieuw">Nieuw</span><div class="card-date">2025 - lopend</div><div class="card-title">BNC-fiche: Kabinetsstandpunt NRPP-verordening</div><div class="card-text">Het kabinet steunt vereenvoudiging maar plaatst kanttekeningen bij de leenfaciliteit, de additionaliteitseis en de rol van decentrale overheden. Subsidiariteitstoets: positief.</div></div><div class="card-footer"><span class="card-source">Rijksoverheid / Eerste Kamer</span><a class="card-link" href="https://www.eerstekamer.nl/eu/edossier/e250026_voorstel_voor_een" target="_blank">Bekijk</a></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-verordening">Verordening</span><div class="card-date">2025</div><div class="card-title">ESF-verordening als onderdeel van NRPP</div><div class="card-text">Minimaal 14% van het NRPP-budget moet worden besteed aan sociale doelstellingen. ESF wordt geimplementeerd als onderdeel van het NRPP, aangevuld met ESF-specifieke bepalingen.</div></div><div class="card-footer"><span class="card-source">Tweede Kamer, nr. 4152</span></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-verordening">Verordening</span><div class="card-date">Vanaf juni 2027</div><div class="card-title">Indiening concept-NRPP's door lidstaten</div><div class="card-text">Lidstaten kunnen eerste concept-NRPP's indienen. Commissie beoordeelt en doet uitvoeringsbesluit-voorstel aan de Raad (gekwalificeerde meerderheid). Uitbetaling binnen 60 dagen na goedkeuring.</div></div><div class="card-footer"><span class="card-source">NRPP-verordening art. 4</span></div></div>
-    </div>
-  </div>
-  <div class="panel" id="panel-nederland">
-    <div class="panel-header"><div class="panel-title">Geopolitieke Ontwikkelingen - Nederland<small>Kabinetsstandpunten, medeoverheden en parlementaire behandeling</small></div><span class="agent-badge">Geopolitieke Agent NL</span></div>
-    <div class="output-box" style="margin-bottom:20px"><div class="output-box-header"><span>Geopolitieke Agent (NL) - Analyseresultaat</span><span class="badge-live" id="nederlandBadge">NIET GELADEN</span></div><div class="output-content" id="nederlandOutput"><p>Klik op <strong>Wekelijkse update</strong> om de geopolitieke agent te starten voor de meest recente Nederlandse ontwikkelingen rondom het NRPP.</p></div></div>
-    <div class="card-grid geopolitiek">
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-nederland">Nederland</span><div class="card-date">Nov 2025</div><div class="card-title">Raad Algemene Zaken: eerste pijler MFK</div><div class="card-text">17 november 2025: bespreking fusie cohesie, landbouw/visserij en HOME-fondsen in NRPP's. Nederland betoogt voor werkbare systematiek en borging van decentrale overheden in het partnerschapsbeginsel.</div></div><div class="card-footer"><span class="card-source">Eerste Kamer 21501-02</span></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-nederland">Nederland</span><div class="card-date">Dec 2025</div><div class="card-title">HNP/VNG/UvW: Laat Europees geld werken voor Nederland</div><div class="card-text">Medeoverheden boden fiche aan Kamerleden aan. Centrale boodschap: wettelijke borging partnerschapsprincipe, regionale programmering en toegankelijke fondsen. Medeoverheden zijn partner, geen bijwagen.</div></div><div class="card-footer"><span class="card-source">HNP / KED</span></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-nederland">Nederland</span><div class="card-date">Lopend 2026</div><div class="card-title">Aansluiting op NPVR en Ruimtelijke Economische Visie</div><div class="card-text">Kabinet wil NRPP-programmering koppelen aan NPVR, REV en Nationaal Programma Leefbaarheid. Drietal transities centraal: digitaal, groen en sociaal/arbeidsmarkt.</div></div><div class="card-footer"><span class="card-source">Kabinetsappreciatie NRPP</span></div></div>
-    </div>
-  </div>
-  <div class="panel" id="panel-europa">
-    <div class="panel-header"><div class="panel-title">Geopolitieke Ontwikkelingen - EU-breed<small>Commissievoorstellen, EP-standpunten, Comite van de Regio's en lidstaatdiscussies</small></div><span class="agent-badge">Geopolitieke Agent EU</span></div>
-    <div class="output-box" style="margin-bottom:20px"><div class="output-box-header"><span>Geopolitieke Agent (EU) - Analyseresultaat</span><span class="badge-live" id="europaBadge">NIET GELADEN</span></div><div class="output-content" id="europaOutput"><p>Klik op <strong>Wekelijkse update</strong> om de geopolitieke agent te starten voor EU-brede ontwikkelingen rondom het NRPP.</p></div></div>
-    <div class="card-grid geopolitiek">
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-europa">Europa</span><div class="card-date">16 juli 2025</div><div class="card-title">MFK-voorstel: 2 biljoen euro begroting - 4 pijlers</div><div class="card-text">Commissie presenteerde MFK 2028-2034 met totaalbegroting van 2 biljoen euro (1,26% BNI). NRPP-pijler is met 865 miljard de grootste pijler (44%). Vereenvoudiging van 540 programma's naar 27 NRPP's + Interreg.</div></div><div class="card-footer"><span class="card-source">Europese Commissie COM(2025)565</span></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-europa">Europa</span><div class="card-date">2025-lopend</div><div class="card-title">EP en CvdR eisen aanpassingen governance-model</div><div class="card-text">Europees Parlement en vertegenwoordigers van regio's bekritiseren het voorgestelde model waarbij regionale middelen niet worden uitbetaald bij nationale hervormingsachterstanden. Risico voor decentrale overheden.</div></div><div class="card-footer"><span class="card-source">Politico / Committee of the Regions</span></div></div>
-      <div class="card"><div class="card-accent"></div><div class="card-body"><span class="card-tag tag-europa">Europa</span><div class="card-date">2028-2034</div><div class="card-title">Interreg: 10 miljard apart Interreg-programma</div><div class="card-text">Europese territoriale samenwerking blijft behouden als afzonderlijk programma naast de 27 NRPP's. EU-aandeel maximaal 80%; minimaal 20% nationale bijdrage vereist.</div></div><div class="card-footer"><span class="card-source">VVSG / Europese Commissie</span></div></div>
-    </div>
-  </div>
-  <div class="panel" id="panel-enveloppe">
-    <div class="panel-header"><div class="panel-title">Verdeling van de NRPP-Enveloppe<small>Bestuurskundige analyse - 865 miljard MFK 2028-2034</small></div><span class="agent-badge">Bestuurskundige Agent</span></div>
-    <div class="output-box" style="margin-bottom:20px"><div class="output-box-header"><span>Bestuurskundige Agent - Analyseresultaat</span><span class="badge-live" id="enveloppeBadge">NIET GELADEN</span></div><div class="output-content" id="enveloppeOutput"><p>Klik op <strong>Wekelijkse update</strong> om de bestuurskundige agent te starten voor een actuele analyse van de enveloppestructuur en cofinancieringspercentages.</p></div></div>
-    <div class="enveloppe-wrapper">
-      <div class="chart-card">
-        <div class="chart-title">Fondsbundeling NRPP</div>
-        <div class="chart-sub">Indicatieve verdeling 865 miljard euro - 14 fondsen samengevoegd</div>
-        <div class="donut-wrap">
-          <svg viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#003E7E" stroke-width="18" stroke-dasharray="125.4 196.5" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#FFD100" stroke-width="18" stroke-dasharray="118.6 203.3" stroke-dashoffset="-125.4" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#0070C0" stroke-width="18" stroke-dasharray="50.9 271" stroke-dashoffset="-244" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#F07D00" stroke-width="18" stroke-dasharray="27.1 295" stroke-dashoffset="-294.9" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#007A33" stroke-width="18" stroke-dasharray="16.97 305" stroke-dashoffset="-322" transform="rotate(-90 60 60)"/>
-          </svg>
-          <div class="donut-center"><strong>865</strong><span>mrd totaal</span></div>
-        </div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#003E7E"></div><span class="legend-label">Cohesie (EFRO/ESF+/CF)</span><span class="legend-val">~320 mrd</span><span class="legend-pct">37%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#FFD100"></div><span class="legend-label">Landbouw &amp; platteland (GLB)</span><span class="legend-val">~300 mrd</span><span class="legend-pct">35%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#0070C0"></div><span class="legend-label">NextGenEU-terugbet. + NRP</span><span class="legend-val">~130 mrd</span><span class="legend-pct">15%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#F07D00"></div><span class="legend-label">Migratie, visserij &amp; overig</span><span class="legend-val">~70 mrd</span><span class="legend-pct">8%</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#007A33"></div><span class="legend-label">Interreg (apart programma)</span><span class="legend-val">~10 mrd</span><span class="legend-pct">1%</span></div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Thematische minimumpercentages</div>
-        <div class="chart-sub">Verplichte bestedingsdrempels per NRPP (voorstel Commissie)</div>
-        <div class="bar-chart">
-          <div class="bar-row"><div class="bar-label">Sociale doelstellingen (ESF) <span>min. 14%</span></div><div class="bar-bg"><div class="bar-fill" style="width:14%;background:#003E7E"></div></div></div>
-          <div class="bar-row"><div class="bar-label">Klimaat &amp; groene transitie <span>min. 30%</span></div><div class="bar-bg"><div class="bar-fill" style="width:30%;background:#007A33"></div></div></div>
-          <div class="bar-row"><div class="bar-label">Minder ontwikkelde regio's <span>min. 218 mrd</span></div><div class="bar-bg"><div class="bar-fill" style="width:37%;background:#0070C0"></div></div></div>
-          <div class="bar-row"><div class="bar-label">Innovatie &amp; slimme eco. (meer ontw.) <span>min. 50%</span></div><div class="bar-bg"><div class="bar-fill" style="width:50%;background:#FFD100"></div></div></div>
-        </div>
-        <div style="margin-top:24px">
-          <div class="chart-title" style="margin-bottom:8px">Cofinancieringspercentages</div>
-          <div class="bar-chart">
-            <div class="bar-row"><div class="bar-label">EU-aandeel: minder ontw. regio's <span>max. 85%</span></div><div class="bar-bg"><div class="bar-fill" style="width:85%;background:#003E7E"></div></div></div>
-            <div class="bar-row"><div class="bar-label">EU-aandeel: transitieregio's <span>max. 60%</span></div><div class="bar-bg"><div class="bar-fill" style="width:60%;background:#0070C0"></div></div></div>
-            <div class="bar-row"><div class="bar-label">EU-aandeel: meer ontw. regio's (NL) <span>max. 40%</span></div><div class="bar-bg"><div class="bar-fill" style="width:40%;background:#FFD100"></div></div></div>
-            <div class="bar-row"><div class="bar-label">Nat. cofinanciering min. <span>min. 15%</span></div><div class="bar-bg"><div class="bar-fill" style="width:15%;background:#F07D00"></div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="panel" id="panel-tijdlijn">
-    <div class="panel-header"><div class="panel-title">NRPP Tijdlijn 2025-2034<small>Van Commissievoorstel tot uitvoering van de eerste NRPP's</small></div></div>
-    <div class="timeline">
-      <div class="timeline-title">Mijlpalen NRPP-traject</div>
-      <div class="timeline-list">
-        <div class="tl-item"><div class="tl-dot done"></div><div class="tl-date">16 juli 2025</div><div class="tl-label">Commissievoorstel MFK 2028-2034 gepubliceerd</div><div class="tl-desc">COM(2025)565: NRPP-verordening + 13 deelverordeningen. Totaalbudget 2 biljoen euro, NRPP-pijler 865 miljard.</div></div>
-        <div class="tl-item"><div class="tl-dot done"></div><div class="tl-date">Okt-nov 2025</div><div class="tl-label">BNC-fiches kabinet + eerste politieke dialoog Eerste Kamer</div><div class="tl-desc">Kabinetsappreciatie gepubliceerd. Brieven naar Commissie verstuurd op 21 november 2025.</div></div>
-        <div class="tl-item"><div class="tl-dot current"></div><div class="tl-date">2026 - heden</div><div class="tl-label">Triloogonderhandelingen Raad &amp; Europees Parlement</div><div class="tl-desc">Lopende onderhandelingen over governance-model, cofinancieringspercentages en rol medeoverheden. Verwachte afronding: 2027.</div></div>
-        <div class="tl-item"><div class="tl-dot future"></div><div class="tl-date">2027</div><div class="tl-label">Definitieve vaststelling NRPP-verordening</div><div class="tl-desc">Na triloog: formele stemming Raad en EP. Lidstaten kunnen eerste concept-NRPP's indienen (vanaf juni 2027).</div></div>
-        <div class="tl-item"><div class="tl-dot future"></div><div class="tl-date">2027-2028</div><div class="tl-label">Beoordeling en goedkeuring NRPP's per lidstaat</div><div class="tl-desc">Commissie beoordeelt plannen, uitvoeringsbesluit, Raadsbesluit, financieringsbesluit met mijlpalen.</div></div>
-        <div class="tl-item"><div class="tl-dot future"></div><div class="tl-date">2028</div><div class="tl-label">Start uitvoering MFK 2028-2034 - eerste uitbetalingen</div><div class="tl-desc">Lidstaten dienen betaalverzoeken in. Uitbetaling binnen 60 dagen na goedkeuring. Kansen voor West bereidt NRPP West-Nederland voor.</div></div>
-        <div class="tl-item"><div class="tl-dot future"></div><div class="tl-date">2034</div><div class="tl-label">Einde programmaperiode - evaluatie</div><div class="tl-desc">Afsluiting NRPP 2028-2034. Commissie publiceert ex-post evaluaties. Start voorbereiding volgend MFK.</div></div>
-      </div>
-    </div>
-  </div>
+<div class="sbar"><div class="sdot" id="sdot"></div><div style="flex:1" id="stxt"><strong>Monitor gereed.</strong> <span style="color:rgba(255,255,255,.65)">Klik op 'Wekelijkse update' om alle agents te activeren.</span></div><div class="pw" id="pw"><div class="pb" id="pb"></div></div></div>
+<!-- HOME -->
+<div class="panel active" id="panel-home">
+<div class="tlbar">
+<div class="tlbar-t">📅 NRPP Traject 2025–2034 &nbsp;<span style="font-size:11px;font-weight:400;color:#6b7a93">— Huidige fase: Triloogonderhandelingen (2026)</span></div>
+<div class="tls">
+<div class="tls-step done"><div class="tls-dot">✓</div><div class="tls-lbl">Commissie­voorstel</div><div class="tls-date">jul 2025</div></div>
+<div class="tls-step done"><div class="tls-dot">✓</div><div class="tls-lbl">BNC-fiches NL</div><div class="tls-date">okt–nov 2025</div></div>
+<div class="tls-step done"><div class="tls-dot">✓</div><div class="tls-lbl">EP interimrapport</div><div class="tls-date">nov 2025</div></div>
+<div class="tls-step now"><div class="tls-dot">⟳</div><div class="tls-lbl">Triloog­onderhandeling</div><div class="tls-date">2026 – nu</div></div>
+<div class="tls-step fut"><div class="tls-dot">○</div><div class="tls-lbl">Raad &amp; EP akkoord</div><div class="tls-date">2027</div></div>
+<div class="tls-step fut"><div class="tls-dot">○</div><div class="tls-lbl">NRPP indienen</div><div class="tls-date">jun 2027</div></div>
+<div class="tls-step fut"><div class="tls-dot">○</div><div class="tls-lbl">Start programma</div><div class="tls-date">jan 2028</div></div>
+<div class="tls-step fut"><div class="tls-dot">○</div><div class="tls-lbl">Mid-term review</div><div class="tls-date">2030</div></div>
+<div class="tls-step fut"><div class="tls-dot">○</div><div class="tls-lbl">Einde periode</div><div class="tls-date">2034</div></div>
+</div>
+</div>
+<div class="topbar">
+<div class="topbar-t">🗓️ Planning Triloog &amp; Europese Toppen met Regeringsleiders</div>
+<div class="topgrid">
+<div class="topitem past"><div class="top-d">19–20 mrt 2026</div><div class="top-l">Europese Raad</div><div class="top-s">MFK-begroting, Oekraïne, concurrentievermogen</div></div>
+<div class="topitem now"><div class="top-d">apr–jun 2026</div><div class="top-l">Triloog ronde 1 — NRPP-verordening</div><div class="top-s">Polen voorzitter; eerste technische besprekingen governance</div></div>
+<div class="topitem"><div class="top-d">26–27 jun 2026</div><div class="top-l">Europese Raad</div><div class="top-s">MFK politiek akkoord regeringsleiders verwacht</div></div>
+<div class="topitem"><div class="top-d">jul–dec 2026</div><div class="top-l">Triloog ronde 2–4 — NRPP</div><div class="top-s">Denemarken voorzitter; fondsenarchitectuur</div></div>
+<div class="topitem"><div class="top-d">jan–jun 2027</div><div class="top-l">Triloog afronding — Cyprus</div><div class="top-s">Finale tekst; definitief akkoord beoogd vóór zomer 2027</div></div>
+<div class="topitem"><div class="top-d">jun 2027</div><div class="top-l">Concept-NRPP's indienen</div><div class="top-s">Eerste plannen bij Commissie; beoordeling start</div></div>
+</div>
+</div>
+<div class="home-g">
+<div class="hblk"><div class="hblk-hdr"><div class="hblk-t">⚖️ Verordeningen &amp; Regelgeving</div><span class="hblk-badge" style="background:#e8f0fc;color:var(--b)">Juridisch</span></div><div class="hblk-body"><div class="stag">🔄 Triloog gestart</div><p><strong>COM(2025)565</strong> is het centrale wetgevingsinstrument. Het EP stelde op 27 november 2025 een kritisch interimrapport vast en verzet zich tegen de samenvoeging van cohesie, landbouw en andere fondsen in één nationaal plan.</p><p>Von der Leyen stuurde op <strong>6 januari 2026</strong> aanvullende voorstellen: min. 10% earmarking platteland en verplichte betrokkenheid van regionale overheden.</p><p><a href="#" onclick="swByName('regel');return false" style="font-size:12px;font-weight:600">→ Bekijk alle verordeningen</a></p></div></div>
+<div class="hblk"><div class="hblk-hdr"><div class="hblk-t">🇳🇱 Ontwikkelingen in Nederland</div><span class="hblk-badge" style="background:#fef3e2;color:#b35400">Nationaal</span></div><div class="hblk-body"><div class="stag">🔄 Kabinetsposities lopend</div><p><strong>West-Nederland:</strong> Kansen voor West bereidt de overgang van EFRO 2021-2027 naar het NRPP 2028-2034 voor. De G4 (Amsterdam, Rotterdam, Den Haag, Utrecht) en vier provincies zijn actief betrokken.</p><p>Ministeries EZK, SZW, LNV en BZK bereiden de nationale NRPP-hoofdstukken voor. BZK koppelt het programma Leefbaarheid &amp; Veiligheid aan stedelijk NRPP-hoofdstuk.</p><p><a href="#" onclick="swByName('nl');return false" style="font-size:12px;font-weight:600">→ Bekijk Nederlandse ontwikkelingen</a></p></div></div>
+<div class="hblk"><div class="hblk-hdr"><div class="hblk-t">🇪🇺 Totstandkoming Verordeningen</div><span class="hblk-badge" style="background:#eef0fb;color:var(--eb)">EU-Proces</span></div><div class="hblk-body"><div class="stag">🔄 Eerste triloogronde</div><p>De NRPP-verordening doorloopt de <strong>gewone wetgevingsprocedure</strong>: Commissievoorstel (jul 2025) → EP en Raad als medewetgevers → triloogonderhandelingen. Polen leidt de Raadsonderhandelingen (jan–jun 2026).</p><p>De Europese Rekenkamer (ECA, 2026) signaleert een inconsistentie in de prestatienormen. Definitief akkoord beoogd vóór zomer 2027.</p><p><a href="#" onclick="swByName('eu');return false" style="font-size:12px;font-weight:600">→ Bekijk EU-brede ontwikkelingen</a></p></div></div>
+<div class="hblk"><div class="hblk-hdr"><div class="hblk-t">💰 Nederlandse NRPP-Enveloppe</div><span class="hblk-badge" style="background:#e8f5ee;color:var(--g)">Financieel</span></div><div class="hblk-body">
+<div class="mini-c">
+<div class="mini-d"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="30" fill="none" stroke="#003E7E" stroke-width="12" stroke-dasharray="56.5 131.9" stroke-dashoffset="0" transform="rotate(-90 40 40)"/><circle cx="40" cy="40" r="30" fill="none" stroke="#0070C0" stroke-width="12" stroke-dasharray="37.7 150.8" stroke-dashoffset="-56.5" transform="rotate(-90 40 40)"/><circle cx="40" cy="40" r="30" fill="none" stroke="#F07D00" stroke-width="12" stroke-dasharray="22.6 165.9" stroke-dashoffset="-94.2" transform="rotate(-90 40 40)"/><circle cx="40" cy="40" r="30" fill="none" stroke="#FFD100" stroke-width="12" stroke-dasharray="18.8 169.6" stroke-dashoffset="-116.8" transform="rotate(-90 40 40)"/><circle cx="40" cy="40" r="30" fill="none" stroke="#007A33" stroke-width="12" stroke-dasharray="12.6 175.9" stroke-dashoffset="-135.6" transform="rotate(-90 40 40)"/></svg><div class="mini-dc"><strong>~€1,4</strong><span>mrd NL</span></div></div>
+<div class="mleg"><div class="mli"><div class="mld" style="background:#003E7E"></div><span style="flex:1">EFRO/Cohesie</span><span class="mlv">~30%</span></div><div class="mli"><div class="mld" style="background:#0070C0"></div><span style="flex:1">ESF+ Sociaal</span><span class="mlv">~20%</span></div><div class="mli"><div class="mld" style="background:#F07D00"></div><span style="flex:1">Klimaat/JTF</span><span class="mlv">~12%</span></div><div class="mli"><div class="mld" style="background:#FFD100"></div><span style="flex:1">GLB Landbouw</span><span class="mlv">~10%</span></div><div class="mli"><div class="mld" style="background:#007A33"></div><span style="flex:1">Flex &amp; overig</span><span class="mlv">~28%</span></div></div>
+</div>
+<p style="font-size:11px;color:#6b7a93;margin-top:8px">Indicatief — definitief na onderhandelingen. <a href="#" onclick="swByName('env');return false" style="font-size:12px;font-weight:600">→ Volledige analyse</a></p>
+</div></div>
+</div>
+</div>
+<!-- REGELGEVING -->
+<div class="panel" id="panel-regel">
+<div class="phdr"><div class="ptitle">Verordeningen &amp; Regelgeving<small>Juridische analyse NRPP-kader — MFK 2028–2034</small></div><span class="abadge">⚖️ Juridische Agent</span></div>
+<div class="obox"><div class="ohdr"><span>🤖 Juridische Agent — Analyseresultaat</span><span class="blive" id="bJur">NIET GELADEN</span></div><div class="obody" id="oJur"><p>Klik op <strong>'Wekelijkse update'</strong> om de juridische agent te starten. Gedekt: COM(2025)565, ESF+, EFRO, GLB, Interreg-verordeningen, BNC-fiches en parlementaire stukken.</p></div></div>
+<div class="lbox"><div class="ltit">🔗 Relevante Verordeningen &amp; Documenten NRPP</div><div class="lgrid">
+<div class="litem"><div class="lic">📋</div><div class="ltxt"><strong>COM(2025)565 — NRPP-verordening</strong><span>Hoofdverordening Europees Fonds voor NRPP's 2028–2034</span><a href="https://eur-lex.europa.eu/search.html?text=COM+2025+565" target="_blank">EUR-Lex →</a></div></div>
+<div class="litem esf"><div class="lic">👥</div><div class="ltxt"><strong>ESF+-verordening (COM 2025)</strong><span>Europees Sociaal Fonds als onderdeel van NRPP; min. 14% sociaal</span><a href="https://www.tweedekamer.nl/downloads/document?id=2025D39003" target="_blank">Tweede Kamer →</a></div></div>
+<div class="litem efro"><div class="lic">🏗️</div><div class="ltxt"><strong>EFRO &amp; Cohesiefonds (COM 2025/552)</strong><span>Europees Fonds Regionale Ontwikkeling; min. 30% klimaat</span><a href="https://www.eerstekamer.nl/eu/edossier/e250026_voorstel_voor_een" target="_blank">Eerste Kamer E250026 →</a></div></div>
+<div class="litem glb"><div class="lic">🌾</div><div class="ltxt"><strong>Gemeenschappelijk Landbouwbeleid (post-2027)</strong><span>GLB geïntegreerd in NRPP; apart hoofdstuk per lidstaat</span><a href="https://ec.europa.eu/info/food-farming-fisheries/key-policies/common-agricultural-policy_nl" target="_blank">Europese Commissie →</a></div></div>
+<div class="litem int"><div class="lic">🗺️</div><div class="ltxt"><strong>Interreg 2028–2034</strong><span>Afzonderlijk programma naast NRPP's; €10 mrd; max. 80% EU</span><a href="https://www.tweedekamer.nl/kamerstukken/brieven_regering/detail?id=2025Z16817&did=2025D38996" target="_blank">BNC-fiche →</a></div></div>
+<div class="litem"><div class="lic">🏛️</div><div class="ltxt"><strong>EP Interimrapport (nov 2025)</strong><span>Kritisch EP-rapport; bezwaren samenvoeging fondsen, rol regio's</span><a href="https://www.europarl.europa.eu/RegData/etudes/BRIE/2026/783552/BUDG_BRI(2026)783552_EN.pdf" target="_blank">Europees Parlement →</a></div></div>
+<div class="litem"><div class="lic">✉️</div><div class="ltxt"><strong>Brief Von der Leyen (6 jan 2026)</strong><span>10% earmarking platteland; verplichte rol regionale overheden</span><a href="https://esb.nu/nederland-gebaat-bij-koppeling-eu-financiering-aan-hervormingen/" target="_blank">ESB analyse →</a></div></div>
+<div class="litem"><div class="lic">📊</div><div class="ltxt"><strong>MFK-verordening 2028–2034</strong><span>NRPP = pijler 1 (44% van totaal, €865 mrd)</span><a href="https://europadecentraal.nl" target="_blank">Europa Decentraal →</a></div></div>
+</div></div>
+<div class="cgrid ver">
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tv">Verordening</span><div class="cd">16 juli 2025</div><div class="ctit">COM(2025)565 — Oprichting NRPP-Fonds</div><div class="ctxt">Commissievoorstel bundelt 14 fondsen (EFRO, ESF+, CF, GLB, EFMZV) onder één overkoepelend kader voor 2028–2034. Totaalbudget €865 mrd. Gedeeld beheer, partnerschap en prestatiegericht uitkeren als kernprincipes.</div></div><div class="cft"><span class="csr">Europese Commissie</span><a class="clnk" href="https://eur-lex.europa.eu/search.html?text=COM+2025+565" target="_blank">Bekijk →</a></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tnew">Nieuw jan 2026</span><div class="cd">6 januari 2026</div><div class="ctit">Von der Leyen-brief: aanvullingen NRPP</div><div class="ctxt">Commissievoorzitter stelt voor: (1) minimaal 10% nationale allocaties earmarken voor platteland, (2) regionale overheden verplicht betrekken, (3) €45 mrd extra voor boeren (Mercosur-deal).</div></div><div class="cft"><span class="csr">EC / Politico</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tv">Verordening</span><div class="cd">2025 — lopend</div><div class="ctit">BNC-fiche NL: kabinetsstandpunt</div><div class="ctxt">Kabinet steunt vereenvoudiging maar plaatst kanttekeningen bij leenfaciliteit, additionaliteitseis, uitvoerbaarheid tijdlijn (te krap voor 2028) en het loslaten van thematische concentratie op innovatie.</div></div><div class="cft"><span class="csr">Rijksoverheid / Eerste Kamer</span><a class="clnk" href="https://www.eerstekamer.nl/eu/edossier/e250026_voorstel_voor_een" target="_blank">Bekijk →</a></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tv">ECA-advies 2026</span><div class="cd">2026</div><div class="ctit">Rekenkamer: inconsistentie prestatienormen</div><div class="ctxt">Art. 22.2.c NRPP vereist outputindicatoren voor doelstellingen maar niet voor mijlpalen, terwijl art. 14.2.a EU Budget Performance Regulation eindmijlpalen vereist. Dit creëert onduidelijkheid over uitbetalingsmoment.</div></div><div class="cft"><span class="csr">ECA opinies 2025–2026</span></div></div>
+</div>
+</div>
+<!-- NEDERLAND -->
+<div class="panel" id="panel-nl">
+<div class="phdr"><div class="ptitle">Ontwikkelingen in Nederland<small>West-Nederland, ministeries, steden en regio's in het NRPP-dossier</small></div><span class="abadge">🇳🇱 Geopolitieke Agent NL</span></div>
+<div class="obox"><div class="ohdr"><span>🤖 Geopolitieke Agent (NL) — Analyseresultaat</span><span class="blive" id="bNL">NIET GELADEN</span></div><div class="obody" id="oNL"><p>Klik op <strong>'Wekelijkse update'</strong> om de agent te starten voor actuele Nederlandse NRPP-ontwikkelingen.</p></div></div>
+<div class="shdr or"><span style="font-size:18px">🌊</span><div><h3>West-Nederland — Kansen voor West</h3><span>Noord-Holland · Zuid-Holland · Utrecht · Flevoland + G4-steden</span></div></div>
+<div class="cgrid nl">
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tn">West-NL</span><div class="cd">2026 — Kansen voor West</div><div class="ctit">Overgang EFRO 2021-2027 → NRPP 2028</div><div class="ctxt">Kansen voor West bereidt als programmamanager de transitie voor. De vier Randstadprovincies werken aan regionale programmering die aansluit op de NRPP-systematiek.</div></div><div class="cft"><span class="csr">Kansen voor West</span><a class="clnk" href="https://kvw3.kansenvoorwest.nl" target="_blank">→</a></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tn">G4-steden</span><div class="cd">2026 — stedelijk</div><div class="ctit">Amsterdam, Rotterdam, Den Haag, Utrecht</div><div class="ctxt">De G4 zijn als medepartners van Kansen voor West nauw betrokken. Stedelijke ontwikkeling vraagt maatwerkoplossingen. Steden pleiten voor behoud van stedelijke ringfencing en directe toegang tot fondsen.</div></div><div class="cft"><span class="csr">VNG / G4-overleg</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tn">Medeoverheden</span><div class="cd">Dec 2025</div><div class="ctit">HNP/VNG/UvW: "Laat Europees geld werken voor Nederland"</div><div class="ctxt">Medeoverheden boden fiche aan Kamerleden aan: wettelijke borging partnerschapsprincipe, regionale programmering en toegankelijke fondsen. Betrokkenheid medeoverheden is geen gunst maar recht.</div></div><div class="cft"><span class="csr">HNP / KED</span></div></div>
+</div>
+<div class="shdr"><span style="font-size:18px">🏛️</span><div><h3>Ministeries &amp; Nationale Programma's</h3><span>EZK · SZW · LNV · BZK — NRPP-hoofdstukken in voorbereiding</span></div></div>
+<div class="two-col">
+<div>
+<div class="obox"><div class="ohdr" style="background:var(--lb)"><span>💼 Economisch hoofdstuk — Ministerie EZK</span></div><div class="obody" style="font-size:12px"><p>EZK leidt het economische NRPP-hoofdstuk. De drie transities (digitaal, groen, sociaal) zijn de inhoudelijke pijlers. EZK betoogt voor aansluiting op de <strong>Ruimtelijke Economische Visie (REV)</strong> en behoud van thematische concentratie op innovatie.</p></div></div>
+<div class="obox" style="margin-top:14px"><div class="ohdr" style="background:#5a7a3a"><span>🌾 Landbouwhoofdstuk — Ministerie LNV</span></div><div class="obody" style="font-size:12px"><p>LNV beheert het GLB-gedeelte. De earmarking van minimaal 10% voor plattelandsdoelstellingen (Von der Leyen-brief) is van direct belang. Biodiversiteit, waterkwaliteit en klimaatbestendigheid zijn prioriteiten.</p></div></div>
+</div>
+<div>
+<div class="obox"><div class="ohdr" style="background:#2e7d52"><span>👥 Sociaal hoofdstuk — Ministerie SZW</span></div><div class="obody" style="font-size:12px"><p>SZW coördineert het ESF+-gedeelte. Het minimum van <strong>14% voor sociale doelstellingen</strong> is cruciaal voor gemeenten. SZW bewaakt dat vereenvoudiging geen verlies aan directe toegang voor gemeenten oplevert.</p></div></div>
+<div class="obox" style="margin-top:14px"><div class="ohdr" style="background:#7d3c98"><span>🏘️ Stedelijke ontwikkeling &amp; Leefbaarheid — BZK</span></div><div class="obody" style="font-size:12px"><p>BZK is verantwoordelijk voor het <strong>Nationaal Programma Leefbaarheid en Veiligheid</strong> (20 wijken). Dit leent zich voor integratie in het NRPP-hoofdstuk stedelijke ontwikkeling. De G4 vragen specifieke stedelijke earmarking.</p></div></div>
+</div>
+</div>
+</div>
+<!-- EUROPA -->
+<div class="panel" id="panel-eu">
+<div class="phdr"><div class="ptitle">Ontwikkelingen in Europa<small>Europese Commissie, lidstaten, EP en totstandkoming NRPP</small></div><span class="abadge">🇪🇺 Geopolitieke Agent EU</span></div>
+<div class="obox"><div class="ohdr"><span>🤖 Geopolitieke Agent (EU) — Analyseresultaat</span><span class="blive" id="bEUPol">NIET GELADEN</span></div><div class="obody" id="oEUPol"><p>Klik op <strong>'Wekelijkse update'</strong> voor actuele EU-politieke ontwikkelingen via Commissie, Politico en Raad.</p></div></div>
+<div class="two-col">
+<div>
+<div class="shdr"><span style="font-size:18px">🌍</span><div><h3>Politieke Ontwikkelingen &amp; Lidstatenposities</h3><span>Europese Commissie · EP · lidstaten</span></div></div>
+<div class="cgrid eu">
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct te">EC</span><div class="cd">16 juli 2025</div><div class="ctit">MFK-voorstel: €2 biljoen — NRPP als grootste pijler</div><div class="ctxt">NRPP-pijler is met €865 mrd de grootste (44%). Vereenvoudiging: van ~540 programma's naar 27 NRPP's + Interreg. Bundeling 14 fondsen in één kader per lidstaat.</div></div><div class="cft"><span class="csr">Europese Commissie</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct te">Politico</span><div class="cd">nov 2025 – heden</div><div class="ctit">EP &amp; CvdR: bezwaren governance-model</div><div class="ctxt">Vier EP-fracties stuurden kritische brief (30 okt 2025). EP en Comité van de Regio's bekritiseren het model waarbij regionale middelen worden geblokkeerd bij nationale hervormingsachterstanden.</div></div><div class="cft"><span class="csr">Politico / EP</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct te">Lidstaten</span><div class="cd">2026 — lopend</div><div class="ctit">Lidstatenposities: nettobetalers vs. ontvangers</div><div class="ctxt">Nettobetalers (NL, DE, SE, AT, DK) steunen performance-koppeling. Cohesieregio's (PL, HU, RO) vrezen verlies voorspelbare financiering. Hongarije verzet zich tegen rechtsstaatconditionaliteit.</div></div><div class="cft"><span class="csr">Raad Algemene Zaken</span></div></div>
+</div>
+</div>
+<div>
+<div class="shdr pa"><span style="font-size:18px">🏗️</span><div><h3 style="color:var(--p)">Governance van het NRPP in de Lidstaten</h3><span>Partnerschapsbeginsel · medeoverheden · uitvoeringsstructuren</span></div></div>
+<div class="obox"><div class="ohdr" style="background:var(--p)"><span>🤖 Governance Agent — Live analyse</span><span class="blive" id="bEUGov">NIET GELADEN</span></div><div class="obody" id="oEUGov"><p>Klik op <strong>'Wekelijkse update'</strong> voor actuele governance-informatie over hoe lidstaten het NRPP-model implementeren.</p></div></div>
+<div class="cgrid eu">
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct te">Governance</span><div class="cd">2025–2026</div><div class="ctit">Partnerschapsbeginsel: wettelijke borging gevraagd</div><div class="ctxt">De Commissie benadrukt dat nationale, regionale en lokale actoren actief worden betrokken. CvdR en VNG pleiten voor wettelijke verankering van het partnerschap, niet alleen als beginsel maar als recht van medeoverheden.</div></div><div class="cft"><span class="csr">COM(2025)565 art. 6</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct te">Governance</span><div class="cd">2026 — lopend</div><div class="ctit">25% flexibiliteitsbedrag: controle-risico</div><div class="ctxt">Art. 14 NRPP-verordening: 25% van de nationale allocatie is niet vooraf geprogrammeerd. EP ziet risico dat dit de transparantie en voorspelbaarheid vermindert. Rol EP in jaarlijkse begrotingsprocedure onduidelijk.</div></div><div class="cft"><span class="csr">EP-briefing 2026</span></div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- ENVELOPPE -->
+<div class="panel" id="panel-env">
+<div class="phdr"><div class="ptitle">Verdeling van de Middelen<small>Nederlandse NRPP-enveloppe &amp; EU-brede budgetverdeling — MFK 2028–2034</small></div><span class="abadge">💰 Bestuurskundige Agent</span></div>
+<div class="obox"><div class="ohdr"><span>🤖 Bestuurskundige Agent — Analyseresultaat</span><span class="blive" id="bEnv">NIET GELADEN</span></div><div class="obody" id="oEnv"><p>Klik op <strong>'Wekelijkse update'</strong> voor een actuele analyse van de enveloppestructuur en cofinancieringspercentages.</p></div></div>
+<div class="two-col">
+<div class="cwrap">
+<div class="ctitle">EU-brede NRPP-Fondsbundeling</div><div class="csub">Indicatieve verdeling €865 mrd — 14 fondsen samengevoegd</div>
+<div style="display:flex;align-items:flex-start;gap:16px">
+<div class="dwrap"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="45" fill="none" stroke="#003E7E" stroke-width="18" stroke-dasharray="125.4 196.5" stroke-dashoffset="0" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#FFD100" stroke-width="18" stroke-dasharray="118.6 203.3" stroke-dashoffset="-125.4" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#0070C0" stroke-width="18" stroke-dasharray="50.9 271" stroke-dashoffset="-244" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#F07D00" stroke-width="18" stroke-dasharray="27.1 295" stroke-dashoffset="-294.9" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#007A33" stroke-width="18" stroke-dasharray="16.97 305" stroke-dashoffset="-322" transform="rotate(-90 60 60)"/></svg><div class="dc"><strong>€865</strong><span>mrd EU</span></div></div>
+<div class="leg"><div class="li"><div class="ld" style="background:#003E7E"></div><span class="ll">Cohesie (EFRO/ESF+/CF)</span><span class="lv">~€320 mrd</span><span class="lp">37%</span></div><div class="li"><div class="ld" style="background:#FFD100"></div><span class="ll">Landbouw &amp; platteland (GLB)</span><span class="lv">~€300 mrd</span><span class="lp">35%</span></div><div class="li"><div class="ld" style="background:#0070C0"></div><span class="ll">NextGenEU + NRP</span><span class="lv">~€130 mrd</span><span class="lp">15%</span></div><div class="li"><div class="ld" style="background:#F07D00"></div><span class="ll">Migratie, visserij &amp; overig</span><span class="lv">~€70 mrd</span><span class="lp">8%</span></div><div class="li"><div class="ld" style="background:#007A33"></div><span class="ll">Interreg (apart)</span><span class="lv">~€10 mrd</span><span class="lp">~1%</span></div></div>
+</div>
+</div>
+<div class="cwrap">
+<div class="ctitle">Nederlandse NRPP-Enveloppe</div><div class="csub">Indicatieve verdeling ~€1,4 mrd NL (2028–2034, meer-ontwikkeld)</div>
+<div style="display:flex;align-items:flex-start;gap:16px">
+<div class="dwrap"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="45" fill="none" stroke="#003E7E" stroke-width="18" stroke-dasharray="125.4 196.5" stroke-dashoffset="0" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#0070C0" stroke-width="18" stroke-dasharray="67.9 203.3" stroke-dashoffset="-125.4" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#F07D00" stroke-width="18" stroke-dasharray="40.7 271" stroke-dashoffset="-193.3" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#FFD100" stroke-width="18" stroke-dasharray="33.9 295" stroke-dashoffset="-234" transform="rotate(-90 60 60)"/><circle cx="60" cy="60" r="45" fill="none" stroke="#007A33" stroke-width="18" stroke-dasharray="33.9 305" stroke-dashoffset="-267.9" transform="rotate(-90 60 60)"/></svg><div class="dc"><strong>~€1,4</strong><span>mrd NL</span></div></div>
+<div class="leg"><div class="li"><div class="ld" style="background:#003E7E"></div><span class="ll">EFRO / regionaal</span><span class="lv">~€420 mln</span><span class="lp">30%</span></div><div class="li"><div class="ld" style="background:#0070C0"></div><span class="ll">ESF+ / sociaal</span><span class="lv">~€280 mln</span><span class="lp">20%</span></div><div class="li"><div class="ld" style="background:#F07D00"></div><span class="ll">Klimaat / JTF</span><span class="lv">~€168 mln</span><span class="lp">12%</span></div><div class="li"><div class="ld" style="background:#FFD100"></div><span class="ll">GLB / landbouw</span><span class="lv">~€140 mln</span><span class="lp">10%</span></div><div class="li"><div class="ld" style="background:#007A33"></div><span class="ll">Flex &amp; overig</span><span class="lv">~€392 mln</span><span class="lp">28%</span></div></div>
+</div>
+<p style="font-size:10px;color:#8a94a6;margin-top:8px">⚠️ Indicatief — definitief na NRPP-onderhandelingen en Commissiegoedkeuring.</p>
+</div>
+</div>
+<div class="two-col" style="margin-top:16px">
+<div class="cwrap"><div class="ctitle">Thematische Minimumpercentages</div><div class="csub">Verplichte bestedingsdrempels per NRPP (voorstel Commissie)</div><div class="bch"><div class="br"><div class="bl">Sociale doelstellingen (ESF) <span>min. 14%</span></div><div class="bbg"><div class="bfill" style="width:14%;background:#003E7E"></div></div></div><div class="br"><div class="bl">Klimaat &amp; groene transitie <span>min. 30% (EFRO)</span></div><div class="bbg"><div class="bfill" style="width:30%;background:#007A33"></div></div></div><div class="br"><div class="bl">Innovatie BD1 — meer ontw. regio's <span>min. 50% EFRO</span></div><div class="bbg"><div class="bfill" style="width:50%;background:#FFD100"></div></div></div><div class="br"><div class="bl">Platteland &amp; landbouw (Von der Leyen) <span>min. 10%</span></div><div class="bbg"><div class="bfill" style="width:10%;background:#F07D00"></div></div></div><div class="br"><div class="bl">Flexibiliteitsbedrag (niet voorafgeprogrammeerd) <span>25%</span></div><div class="bbg"><div class="bfill" style="width:25%;background:#6B2FA0"></div></div></div></div></div>
+<div class="cwrap"><div class="ctitle">Cofinancieringspercentages (EU-aandeel)</div><div class="csub">Afhankelijk van ontwikkelingsgraad — NL = meer-ontwikkeld</div><div class="bch"><div class="br"><div class="bl">Minder ontw. regio's (&lt;75% BBP/inw.) <span>max. 85%</span></div><div class="bbg"><div class="bfill" style="width:85%;background:#003E7E"></div></div></div><div class="br"><div class="bl">Transitieregio's (75–100% BBP/inw.) <span>max. 60%</span></div><div class="bbg"><div class="bfill" style="width:60%;background:#0070C0"></div></div></div><div class="br"><div class="bl">Meer ontw. regio's — Nederland <span>max. 40%</span></div><div class="bbg"><div class="bfill" style="width:40%;background:#FFD100"></div></div></div><div class="br"><div class="bl">Nationale cofinanciering — NL (schatting) <span>~60%</span></div><div class="bbg"><div class="bfill" style="width:60%;background:#007A33"></div></div></div></div><p style="font-size:11px;color:#6b7a93;margin-top:12px">Nederland valt in de categorie 'meer-ontwikkeld'. Kansen voor West speelt centrale rol als programmamanager West-Nederland.</p></div>
+</div>
+</div>
+<!-- FNLC -->
+<div class="panel" id="panel-fnlc">
+<div class="phdr"><div class="ptitle">Prestatiegerichte Afrekening — FNLC<small>Finance Not Linked to Costs · Prestatieraamwerken · Ervaringen lidstaten</small></div><span class="abadge" style="background:var(--p)">📈 FNLC Agent</span></div>
+<div class="obox"><div class="ohdr" style="background:var(--p)"><span>🤖 FNLC Agent — Analyseresultaat</span><span class="blive" id="bFNLC">NIET GELADEN</span></div><div class="obody" id="oFNLC"><p>Klik op <strong>'Wekelijkse update'</strong> om de FNLC-agent te starten voor informatie over Finance Not Linked to Costs uit lidstaten, het NRPP-voorstel en voorgestelde prestatieraamwerken.</p></div></div>
+<div class="lbox"><div class="ltit" style="color:var(--p)">📚 Wat is Finance Not Linked to Costs (FNLC)?</div><p style="font-size:13px;color:#4a5568;line-height:1.7;margin-bottom:12px"><strong>FNLC</strong> is een financieringsvorm waarbij EU-betalingen worden gekoppeld aan het bereiken van vooraf vastgestelde resultaten, mijlpalen of prestatiedoelstellingen — <em>niet</em> aan de verificatie van gemaakte kosten. In het NRPP-voorstel is dit de centrale uitkeringslogica: alle maatregelen zijn gekoppeld aan mijlpalen en targets.</p><div class="lgrid"><div class="litem" style="border-left-color:var(--p)"><div class="lic">📋</div><div class="ltxt"><strong>EC Wiki: FNLC definitie en toepassingen</strong><span>Financial Regulation 2018, art. 125; DG INTPA toepassingen</span><a href="https://wikis.ec.europa.eu/spaces/ExactExternalWiki/pages/143439598/Financing+Not+Linked+to+Costs" target="_blank">EC Wiki →</a></div></div><div class="litem" style="border-left-color:var(--p)"><div class="lic">🏛️</div><div class="ltxt"><strong>ESF+ FNLC: ervaringen 2021-2027</strong><span>Vereenvoudiging, minder foutenpercentage, betere beleidsresultaten</span><a href="https://european-social-fund-plus.ec.europa.eu/en/financing-not-linked-costs" target="_blank">ESF+ website →</a></div></div><div class="litem" style="border-left-color:var(--p)"><div class="lic">📊</div><div class="ltxt"><strong>EC studie: SCO &amp; FNLC uptake 2014-2027</strong><span>Analyse gebruik FNLC in alle lidstaten per programmering</span><a href="https://ec.europa.eu/regional_policy/information-sources/publications/studies/2025/study-on-the-uptake-of-simplified-cost-options-sco-and-financing-not-linked-to-costs-fnlc" target="_blank">EC DG Regio →</a></div></div><div class="litem" style="border-left-color:var(--p)"><div class="lic">📑</div><div class="ltxt"><strong>EP studie: NRPP risico's &amp; kansen (2026)</strong><span>Analyse FNLC in NRPP-context vs. RRF-ervaringen</span><a href="https://www.europarl.europa.eu/RegData/etudes/STUD/2026/776029/CASP_STU(2026)776029_EN.pdf" target="_blank">Europees Parlement →</a></div></div></div></div>
+<div class="cgrid fnlc">
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">FNLC</span><div class="cd">COM(2025)565</div><div class="ctit">Kernmechanisme: uitkering op basis van mijlpalen</div><div class="ctxt">Alle NRPP-maatregelen zijn gekoppeld aan mijlpalen en targets. Uitbetalingen vinden alleen plaats bij aantoonbare voortgang. Payout-waarden zijn bedragen die de Commissie uitbetaalt bij voortgang in de uitvoering (art. 4.13 NRPP-voorstel).</div></div><div class="cft"><span class="csr">NRPP-verordening art. 4 &amp; 22</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">ECA 2026</span><div class="cd">2026</div><div class="ctit">ECA: inconsistentie prestatienormen</div><div class="ctxt">Art. 22.2.c NRPP vereist outputindicatoren voor doelstellingen maar niet voor mijlpalen. Art. 14.2.a EU Budget Performance Regulation verwijst echter naar eindmijlpalen. Dit creëert onduidelijkheid over wanneer uitbetalingen plaatsvinden.</div></div><div class="cft"><span class="csr">ECA opinies 2025–2026</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">RRF-lessen</span><div class="cd">EC 2025</div><div class="ctit">RRF als blauwdruk: +17% naleving LSA's</div><div class="ctxt">De prestatiegerichte systematiek is gebouwd op ervaringen met de Recovery and Resilience Facility (RRF). Naleving van landspecifieke aanbevelingen steeg met 17 procentpunt na inwerkingtreding van de RRF in 2021.</div></div><div class="cft"><span class="csr">EC analyse 2025 / ESB 2026</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">ESF+</span><div class="cd">2021–2027</div><div class="ctit">ESF+: FNLC = 6% van totaalbudget</div><div class="ctxt">Slechts 6% van het totale ESF+-budget (€8,5 mrd) wordt via FNLC uitgevoerd. SCO's zijn meer wijdverbreid: ~25% van ESF+-betalingen. Litouwen en Estland gelden als koplopers in FNLC-toepassing.</div></div><div class="cft"><span class="csr">EC ESF+ rapport 2025</span><a class="clnk" href="https://european-social-fund-plus.ec.europa.eu/en/financing-not-linked-costs" target="_blank">→</a></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">NL</span><div class="cd">2026 — voorbereiding</div><div class="ctit">Nederland: FNLC-voorbereiding voor NRPP</div><div class="ctxt">Als NL pleit voor prestatiegerichte financiering bij andere lidstaten, moet NL zelf ook hervormingen doorvoeren in ruil voor EU-middelen (ESB 2026). Dit vraagt politieke bereidheid om LSA's te adresseren.</div></div><div class="cft"><span class="csr">ESB / Tweede Kamer 2026</span></div></div>
+<div class="card"><div class="ca"></div><div class="cb"><span class="ct tf">Prestatieraamwerk</span><div class="cd">2027 — voorbereiding</div><div class="ctit">Prestatieraamwerk: mijlpalen in het NRPP-plan</div><div class="ctxt">Elke maatregel in het NRPP vereist vooraf vastgestelde mijlpalen. Deze worden opgenomen in het financieringsbesluit (art. 4 NRPP-verordening). Het raamwerk moet gereed zijn bij indiening concept-NRPP (jun 2027).</div></div><div class="cft"><span class="csr">NRPP-verordening / EP-briefing</span></div></div>
+</div>
+</div>
 </main>
-<footer>
-  <div class="footer-inner">
-    <div><span class="footer-kvw">Kansen voor West NRPP Monitor</span><br>Gebaseerd op Kansen voor West huisstijl - Europese structuurfondsen West-Nederland</div>
-    <div style="text-align:right"><a href="https://kvw3.kansenvoorwest.nl" target="_blank">kvw3.kansenvoorwest.nl</a> - <a href="https://europadecentraal.nl" target="_blank">Europa Decentraal</a> - <a href="https://www.eerstekamer.nl/eu/edossier/e250026_voorstel_voor_een" target="_blank">Eerste Kamer E250026</a><br><span style="font-size:11px">Monitor wordt wekelijks bijgewerkt via AI-agents - MFK 2028-2034</span></div>
-  </div>
-</footer>
+<footer><div class="ftr"><div><span class="fbr">Kansen voor West NRPP Monitor v2</span><br>West-Nederland · MFK 2028–2034 · Bronnen: EC, Politico, Tweede Kamer, ESB, Europa Decentraal</div><div style="text-align:right"><a href="https://kvw3.kansenvoorwest.nl" target="_blank">kvw3.kansenvoorwest.nl</a> · <a href="https://europadecentraal.nl" target="_blank">Europa Decentraal</a> · <a href="https://www.eerstekamer.nl/eu/edossier/e250026_voorstel_voor_een" target="_blank">Eerste Kamer E250026</a> · <a href="https://www.politico.eu/section/europe/" target="_blank">Politico EU</a></div></div></footer>
 <script>
-const API_URL="https://api.anthropic.com/v1/messages";
-document.addEventListener('DOMContentLoaded',function(){updateTimestamp()});
-function updateTimestamp(){var n=new Date();document.getElementById('lastUpdated').textContent='Bijgewerkt: '+n.toLocaleDateString('nl-NL',{day:'2-digit',month:'short',year:'numeric'})+' '+n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})}
-function switchPanel(name,btn){document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});document.getElementById('panel-'+name).classList.add('active');var m={regelgeving:0,nederland:1,europa:2,enveloppe:3};if(m[name]!==undefined)document.querySelectorAll('.agent-tab').forEach(function(t,i){t.classList.toggle('active',i===m[name])})}
-function switchAgent(name,btn){document.querySelectorAll('.agent-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');var idx=['regelgeving','nederland','europa','enveloppe'].indexOf(name);var tabs=document.querySelectorAll('.nav-tab');if(tabs[idx])tabs[idx].click()}
+const API="https://api.anthropic.com/v1/messages";
+document.addEventListener('DOMContentLoaded',()=>{const n=new Date();document.getElementById('lastUpd').textContent='Bijgewerkt: '+n.toLocaleDateString('nl-NL',{day:'2-digit',month:'short',year:'numeric'})+' '+n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})});
+function sw(name,btn){document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));const el=document.getElementById('panel-'+name);if(el)el.classList.add('active')}
+function swByName(name){const tabs=document.querySelectorAll('.ntab');const names=['home','regel','nl','eu','env','fnlc'];const i=names.indexOf(name);if(i>=0)sw(name,tabs[i])}
 async function refreshAll(){
-  var btn=document.getElementById('refreshBtn'),icon=document.getElementById('refreshIcon'),dot=document.getElementById('statusDot'),st=document.getElementById('statusText'),pw=document.getElementById('progressWrap'),pb=document.getElementById('progressBar');
-  btn.classList.add('loading');dot.classList.add('loading');pw.classList.add('visible');
-  var agents=[{id:'juridisch',label:'Juridische agent'},{id:'nederland',label:'Geopolitieke agent NL'},{id:'europa',label:'Geopolitieke agent EU'},{id:'enveloppe',label:'Bestuurskundige agent'}];
-  for(var i=0;i<agents.length;i++){pb.style.width=Math.round(i/agents.length*100)+'%';st.innerHTML='<strong>'+agents[i].label+' actief...</strong> <span style="color:rgba(255,255,255,.7)">NRPP-ontwikkelingen ophalen</span>';await runAgent(agents[i].id)}
-  pb.style.width='100%';setTimeout(function(){pw.classList.remove('visible');pb.style.width='0%'},800);
-  dot.classList.remove('loading');btn.classList.remove('loading');
-  st.innerHTML='<strong>Alle agents voltooid.</strong> <span style="color:rgba(255,255,255,.7)">Bijgewerkt op '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})+'</span>';updateTimestamp()}
-async function runAgent(id){
-  var out=document.getElementById(id+'Output'),badge=document.getElementById(id+'Badge');
-  out.innerHTML='<p>Laden...</p>';badge.textContent='LADEN...';badge.style.background='#aaa';badge.style.color='#fff';
-  var prompts={
-    juridisch:'Jij bent een juridische agent gespecialiseerd in het NRPP (Nationaal en Regionaal Partnerschapsplan, MFK 2028-2034, 865 miljard euro totaalbudget). Geef een beknopt juridisch overzicht (4-6 zinnen, in het Nederlands) van: 1) Meest recente stand van zaken NRPP-verordening COM 2025/565, 2) Kernjuridische aandachtspunten: bevoegdheidsverdeling, subsidiariteit, partnerschapsbeginsel, cofinanciering, 3) Status onderhandelingen Commissie/Raad/EP. Schrijf professioneel voor beleidsmedewerkers bij Nederlandse medeoverheden.',
-    nederland:'Jij bent een geopolitieke analist gespecialiseerd in de Nederlandse positie ten aanzien van het NRPP (MFK 2028-2034). Geef een actueel geopolitiek overzicht (4-6 zinnen, in het Nederlands) van: 1) Kabinetsstandpunten en inzet in Brussel, 2) Positie VNG, IPO, UvW en Kansen voor West, 3) Lopende parlementaire discussies Eerste en Tweede Kamer, 4) Aansluiting op NPVR en Ruimtelijke Economische Visie.',
-    europa:'Jij bent een geopolitieke analist gespecialiseerd in EU-brede ontwikkelingen rondom het NRPP (MFK 2028-2034). Geef een actueel overzicht (4-6 zinnen, in het Nederlands) van: 1) Stand van triloogonderhandelingen Raad/EP, 2) Posities grote lidstaten, 3) Standpunt Comite van de Regio's en EP, 4) Kritiekpunten op het governance-model. Schrijf compact en feitelijk.',
-    enveloppe:'Jij bent een bestuurskundige expert in EU-fondsverdeling. Het NRPP-budget bedraagt 865 miljard euro (MFK 2028-2034). Geef een beknopte bestuurskundige analyse (4-6 zinnen, in het Nederlands) van: 1) Verdeling 865 miljard over fondsen en categorieen, 2) Verplichte bestedingspercentages (sociaal 14%, klimaat 30% etc.), 3) De prestatiegerichte uitkeringslogica (koppeling aan landspecifieke aanbevelingen), 4) Gevolgen voor Nederlandse regio's (meer-ontwikkeld-categorie). Schrijf concreet en cijfermatig.'
-  };
-  try{
-    var r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompts[id]}]})});
-    var d=await r.json();
-    var text='';if(d.content)for(var b of d.content){if(b.type==='text')text+=b.text}
-    if(text){out.innerHTML=text.split('
-').filter(function(l){return l.trim()}).map(function(l){return '<p>'+l+'</p>'}).join('');badge.textContent='BIJGEWERKT';badge.style.background='#4ade80';badge.style.color='#15401e'}
-    else{out.innerHTML='<p><em>Geen aanvullende ontwikkelingen gevonden voor deze periode.</em></p>';badge.textContent='GEEN DATA';badge.style.background='#f07d00'}
-  }catch(e){out.innerHTML='<p><strong>Verbindingsfout:</strong> Voeg een geldige Anthropic API-sleutel toe aan de broncode (zoek op API_URL en voeg header x-api-key toe).</p>';badge.textContent='FOUT';badge.style.background='#ef4444'}}
+const btn=document.getElementById('rfBtn'),ico=document.getElementById('rfIco'),dot=document.getElementById('sdot'),st=document.getElementById('stxt'),pw=document.getElementById('pw'),pb=document.getElementById('pb');
+const apiKey=document.getElementById('apiKey').value.trim();
+if(!apiKey){alert('Voer eerst uw Anthropic API-sleutel in (sk-ant-...) in het veld rechts bovenin.');return}
+btn.classList.add('loading');ico.classList.add('spin');dot.classList.add('ld');pw.classList.add('vis');
+const agents=[{id:'Jur',lbl:'Juridische agent'},{id:'NL',lbl:'Geopolitieke agent NL'},{id:'EUPol',lbl:'EU-politieke agent'},{id:'EUGov',lbl:'EU-governance agent'},{id:'Env',lbl:'Bestuurskundige agent'},{id:'FNLC',lbl:'FNLC-agent'}];
+for(let i=0;i<agents.length;i++){pb.style.width=Math.round(i/agents.length*100)+'%';st.innerHTML='<strong>'+agents[i].lbl+' actief…</strong> <span style="color:rgba(255,255,255,.65)">Meest recente NRPP-informatie ophalen</span>';await runAgent(agents[i].id,apiKey)}
+pb.style.width='100%';setTimeout(()=>{pw.classList.remove('vis');pb.style.width='0%'},800);
+dot.classList.remove('ld');btn.classList.remove('loading');ico.classList.remove('spin');
+st.innerHTML='<strong>Alle agents voltooid.</strong> <span style="color:rgba(255,255,255,.65)">Monitor bijgewerkt op '+new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})+'</span>'}
+const prompts={
+Jur:'Je bent een juridische agent voor het NRPP (Nationaal en Regionaal Partnerschapsplan, MFK 2028-2034). Geef een beknopt juridisch overzicht (5-8 zinnen, in het Nederlands) over: 1) Actuele stand NRPP-verordening COM(2025)565 en triloogonderhandelingen, 2) Kernjuridische kwesties: bevoegdheidsverdeling, subsidiariteit, partnerschapsbeginsel, horizontale condities, 3) ECA-inconsistentie tussen NRPP-verordening en EU Budget Performance Regulation, 4) Status BNC-fiches Nederland. Schrijf voor beleidsmedewerkers bij Kansen voor West.',
+NL:'Je bent een geopolitieke analist voor de Nederlandse NRPP-positie. Geef een actueel overzicht (5-8 zinnen, Nederlands) over: 1) Kabinetsstandpunten EZK/SZW/LNV/BZK, 2) Positie Kansen voor West, VNG, IPO, UvW, 3) West-Nederland voorbereiding (G4 + 4 provincies), 4) Programma Leefbaarheid en Veiligheid BZK in relatie tot stedelijk NRPP-hoofdstuk, 5) Aansluiting op NPVR en REV.',
+EUPol:'Je bent een geopolitieke analist voor EU-brede NRPP-ontwikkelingen. Haal informatie op van Politico EU en de Europese Commissie. Geef een actueel overzicht (5-7 zinnen, Nederlands) over: 1) Stand triloogonderhandelingen Polen-voorzitterschap 2026, 2) Posities grote lidstaten (DE, FR, PL, HU, ES), 3) EP-amendementen en fracties, 4) Verwachtingen Europese Raad juni 2026 MFK-akkoord.',
+EUGov:'Je bent een governance-expert voor het NRPP-uitvoeringsmodel. Geef een actueel overzicht (5-7 zinnen, Nederlands) over: 1) Hoe lidstaten het partnerschapsbeginsel invullen, 2) Governance-kritiek CvdR en regionale overheden, 3) Stuurmechanisme gekoppeld aan Europees Semester, 4) Risico's van 25% flexibiliteitsbedrag voor transparantie.',
+Env:'Je bent een bestuurskundige expert in EU-fondsenallocatie voor het NRPP. Geef een beknopte analyse (5-7 zinnen, Nederlands) over: 1) Actuele stand Nederlandse NRPP-enveloppe (~€1,4 mrd totaal), 2) Impact Von der Leyen-brief (10% platteland earmarking), 3) Prestatiegerichte uitkeringslogica en koppeling LSA's, 4) Gevolgen voor West-Nederland (meer-ontwikkeld, max. 40% EU-cofinanciering).',
+FNLC:'Je bent een expert in Finance Not Linked to Costs (FNLC) en prestatiegerichte EU-financiering. Geef een actueel overzicht (6-8 zinnen, Nederlands) over: 1) Hoe FNLC in het NRPP-voorstel is ingericht vs. de Recovery and Resilience Facility, 2) Ervaringen lidstaten met FNLC in ESF+ 2021-2027 (Litouwen, Estland), 3) ECA-inconsistentie prestatienormen, 4) Wat lidstaten als prestatieraamwerken voorstellen, 5) Risico's voor decentrale overheden.'
+};
+async function runAgent(id,apiKey){
+const el=document.getElementById('o'+id),badge=document.getElementById('b'+id);
+if(!el||!badge)return;
+el.textContent='Laden…';badge.textContent='LADEN…';badge.style.background='#aaa';badge.style.color='#fff';
+try{
+const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompts[id]}]})});
+const data=await res.json();
+let text='';if(data.content)for(const b of data.content)if(b.type==='text')text+=b.text;
+if(text){el.innerHTML=text.split('\n').filter(l=>l.trim()).map(l=>'<p>'+l+'</p>').join('');badge.textContent='BIJGEWERKT';badge.style.background='#4ade80';badge.style.color='#15401e'}
+else{el.innerHTML='<p><em>Geen aanvullende ontwikkelingen gevonden.</em></p>';badge.textContent='GEEN DATA';badge.style.background='#f07d00'}
+}catch(e){el.innerHTML='<p><strong>Fout:</strong> '+e.message+'</p>';badge.textContent='FOUT';badge.style.background='#ef4444'}}
 </script>
 </body>
 </html>
